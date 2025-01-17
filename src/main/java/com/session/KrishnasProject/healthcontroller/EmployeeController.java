@@ -1,6 +1,7 @@
 package com.session.KrishnasProject.healthcontroller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.session.KrishnasProject.commonservices.EmployeeService;
@@ -142,7 +144,19 @@ public class EmployeeController {
         });
         return ResponseEntity.badRequest().body(errors);
 	}
+	@GetMapping("/get")
+	public ResponseEntity<List<Employee>> fetchEmployeebyDepartmentId(@RequestParam(name="name") String departmentName)
+	{
+		return ResponseEntity.ok(employeeService.fetchEmployeebyDepartmentId(departmentName));
+		
+	}
+	@DeleteMapping("/new/{id}")
 	
+	public ResponseEntity<HttpStatus> deleteEmployeeByID(@PathVariable Long id) throws InterruptedException
+	{
+		employeeService.deleteEmployeeByID(id);
+		 return ResponseEntity.ok().build();
+	}
 	
 	
 	
